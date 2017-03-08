@@ -1,10 +1,11 @@
 package re
 
-func Do(f func(int) (bool, error)) error {
-	for i := 1; ; i += 1 {
-		b, e := f(i)
-		if e == nil || !b {
+func Do(n int, f func(int) error) error {
+	var e error
+	for i := 0; i < n; i += 1 {
+		if e = f(i); e == nil {
 			return e
 		}
 	}
+	return e
 }

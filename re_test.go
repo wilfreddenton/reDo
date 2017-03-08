@@ -6,7 +6,7 @@ import (
 )
 
 func test1(i int) error {
-	if i < 2 {
+	if i == 0 {
 		return fmt.Errorf("error")
 	}
 	return nil
@@ -18,28 +18,28 @@ func test2(i int) error {
 
 func TestDo(t *testing.T) {
 	count := 0
-	err := Do(func(i int) (bool, error) {
+	n := 2
+	err := Do(n, func(i int) error {
 		count += 1
-		err := test1(i)
-		return i < 2, err
+		return test1(i)
 	})
 	if err != nil {
 		t.Errorf("err should be nil")
 	}
-	if count != 2 {
-		t.Errorf("count should be 2")
+	if count != n {
+		t.Errorf("count should be %d", n)
 	}
 
 	count = 0
-	err = Do(func(i int) (bool, error) {
+	n = 3
+	err = Do(n, func(i int) error {
 		count += 1
-		err = test2(i)
-		return i < 3, err
+		return test2(i)
 	})
 	if err == nil {
 		t.Error("err should not be nil")
 	}
-	if count != 3 {
-		t.Errorf("count should be 3")
+	if count != n {
+		t.Errorf("count should be %d", 3)
 	}
 }

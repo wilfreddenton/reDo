@@ -2,9 +2,10 @@
 
 ```
 var str string
-err := re.Do(func(i int) (bool, error) {
+// 2 tries
+err := re.Do(2, func(i int) error {
   var err error
   str, err = YourFunc()
-  return i < 2, err // 2 attempts
+  return err
 })
 ```
